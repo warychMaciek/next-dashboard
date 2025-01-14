@@ -1,8 +1,8 @@
 import { db } from "@vercel/postgres";
 
-const client = await db.connect();
-
 async function listInvoices() {
+  const client = await db.connect();
+
 	const data = await client.sql`
     SELECT invoices.amount, customers.name
     FROM invoices
@@ -10,6 +10,7 @@ async function listInvoices() {
     WHERE invoices.amount = 666;
   `;
 
+  client.release();
 	return data.rows;
 }
 
